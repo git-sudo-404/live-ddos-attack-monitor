@@ -507,3 +507,20 @@ INSERT INTO ddos_attack_logs (
         ('191.185.67.215'::CIDR, TRUE, ST_SetSRID(ST_MakePoint(-111.2315, 22.4594), 4326)::GEOGRAPHY, TRUE, 1, 'City E', 6078, 'ISP1', '34.73.175.198'::CIDR, TRUE, ST_SetSRID(ST_MakePoint(86.7508, -57.5961), 4326)::GEOGRAPHY, TRUE, 225, 'Target City A', 50634, 'NTP', 123, NOW() - INTERVAL '10 days 16 hours 34 minutes', TRUE, 'NTP Amplification', 'Network Layer', 'Critical', 61, 8349789, 11380762407, 12173, 2049, 'Firewall', 'IP blocked', true, 'shodan')
 ;
 
+
+-- CREATE VIEWS so that can easily access the complex queries as well everyone will be working on the same query.
+
+-- Needed Views for handling complex queries : 
+        
+        -- i) attacks in last 24 Hrs 
+        -- ii) attacks in last 7 days 
+        -- iii) attacks in last 1 month 
+        -- iv) attacks in last 1 year 
+        -- 
+        -- v) attacks with critical severity 
+        -- vi) attacks with  high severity 
+        -- vii) attacks with medium severity 
+        -- viii) attacks with low severity 
+
+
+
