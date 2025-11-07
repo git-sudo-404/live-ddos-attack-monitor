@@ -522,5 +522,50 @@ INSERT INTO ddos_attack_logs (
         -- vii) attacks with medium severity 
         -- viii) attacks with low severity 
 
+CREATE OR REPLACE VIEW view_ddos_attack_24hours 
+SELECT * 
+FROM ddos_attack_logs 
+WHERE time_of_attack >= NOW() - INTERVAL '24 hours';
 
 
+
+CREATE OR REPLACE VIEW view_ddos_attack_7days AS  
+SELECT * 
+FROM ddos_attack_logs 
+WHERE time_of_attack >= NOW() - INTERVAL '7 days';
+
+
+CREATE OR REPLACE VIEW view_ddos_attack_1month AS 
+SELECT * 
+FROM ddos_attack_logs 
+WHERE time_of_attack >= NOW() - INTERVAL '1 month';
+
+
+CREATE OR REPLACE VIEW view_ddos_attack_1year AS 
+SELECT *
+FROM ddos_attack_logs
+WHERE time_of_attack >= NOW() - INTERVAL '1 year';
+
+
+CREATE OR REPLACE VIEW view_ddos_attack_severity_critical AS 
+SELECT * 
+FROM ddos_attack_logs 
+WHERE severity_level == 'Critical';
+
+
+CREATE OR REPLACE VIEW view_ddos_attack_severity_high AS 
+SELECT * 
+FROM ddos_attack_logs
+WHERE severity_level == 'High';
+
+
+CREATE OR REPLACE VIEW view_ddos_attack_severity_medium AS
+SELECT * 
+FROM ddos_attack_logs 
+WHERE severity_level == 'Medium';
+
+
+CREATE OR REPLACE VIEW view_ddos_attack_severity_miw AS 
+SELECT * 
+FROM ddos_attack_logs
+WHERE severity_level == 'Low';

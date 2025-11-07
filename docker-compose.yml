@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  db:
+    image: postgis/postgis:16-3.3
+    container_name: live_ddos_postgres_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypass
+    ports:
+      - "5432:5432" # maps container DB port to host
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro # initialize DB on first run
+    networks:
+      - live_ddos_net
+
+networks:
+  live_ddos_net:
