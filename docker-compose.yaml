@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  postgres-db:
+    build: ./database
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB}
+    ports:
+      - "5432:5432"
+    # This automatically persists your data
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data
+
+    # NOTE: even though depend_on ensures that postgres-db service starts before backend , the postgres might not have been initialized yet , so add a health check to ensure that
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: express-backend-image
+    container_name: express-backend
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB=${DB}
+      - DB_HOST=postgres-db
+      - DB_PORT=5432
+      - DB_NAME=${DB}
+      - API_PORT=${API_PORT}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+# This named volume is where your DB data will be stored
+# volumes:
+#   postgres_data: {}

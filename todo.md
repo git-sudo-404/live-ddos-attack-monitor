@@ -2,6 +2,10 @@
 
 #### _TODO_
 
-- CI/CD Pipeline in GitHub
+- Use docker-compose.dev.yaml while developing using hot-reloading.
 
-* Experiment with PostgreSQL & TimeScaleDB
+- Use multi-stage Dockerfile to reduce image size in production.
+
+* CI/CD Pipeline in GitHub
+
+- Experiment with PostgreSQL & TimeScaleDB
