@@ -58,5 +58,26 @@ services:
       postgres-db:
         condition: service_healthy
 
+  frontend:
+    container_name: react-frontend-dev
+    image: node:22-alpine3.22
+    working_dir: /app
+    # 2. We run the 'dev' command for Vite
+    #    The '--host' flag is CRITICAL to access it from your browser
+    command: sh -c "yarn install && yarn dev --host"
+    ports:
+      # 3. Vite's default port is 5173
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8080
+    volumes:
+      # This maps your local folder into the container
+      - ./frontend:/app
+      # This keeps the container's node_modules separate
+      - /app/node_modules
+    depends_on:
+      # Optional: You can make the frontend wait for the backend
+      - backend
+
 volumes:
   postgres_data: {}
