@@ -11,8 +11,8 @@ services:
     ports:
       - "5432:5432"
     # This automatically persists your data
-    # volumes:
-    #   - postgres_data:/var/lib/postgresql/data
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
     # NOTE: even though depend_on ensures that postgres-db service starts before backend , the postgres might not have been initialized yet , so add a health check to ensure that
     healthcheck:
@@ -40,6 +40,23 @@ services:
     depends_on:
       postgres-db:
         condition: service_healthy
+
+    # This checks if the port (8080) is open
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build: ./frontend
+    container_name: react-frontend
+    ports:
+      - "7070:7070"
+    depends_on:
+      backend:
+        condition: service_healthy # Waits for the backend to be ready
+
 # This named volume is where your DB data will be stored
-# volumes:
-#   postgres_data: {}
+volumes:
+  postgres_data: {}
