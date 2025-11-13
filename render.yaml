@@ -1,0 +1,58 @@
+services:
+  # 1. The Postgres Database
+  - type: pserv
+    name: postgres-db
+    plan: free # Use 'starter' for a non-free, more powerful plan
+    # This automatically finds the Dockerfile in ./database
+    dockerfilePath: ./database/Dockerfile
+    envVars:
+      - key: POSTGRES_USER
+        value: ${DB_USER}
+      - key: POSTGRES_PASSWORD
+        value: ${DB_PASSWORD}
+      - key: POSTGRES_DB
+        value: ${DB}
+    disk:
+      name: postgres_data
+      mountPath: /var/lib/postgresql/data
+      sizeGB: 1 # Smallest size for persistent data
+
+  # 2. The Backend Service
+  - type: web
+    name: backend
+    plan: free
+    # This tells Render to build the Dockerfile in ./backend
+    dockerfilePath: ./backend/Dockerfile
+    # Render automatically gets the 'postgres-db' host URL
+    envVars:
+      - key: DB_HOST
+        fromService:
+          type: pserv
+          name: postgres-db
+          property: host
+      - key: DB_USER
+        value: ${DB_USER}
+      - key: DB_PASSWORD
+        value: ${DB_PASSWORD}
+      - key: DB_NAME
+        value: ${DB}
+      - key: API_PORT
+        value: 8080
+    healthCheck:
+      # This matches your compose file's healthcheck
+      path: / # You might need to change this to a real healthcheck endpoint
+      initialDelaySeconds: 30
+    autoDeploy: true # Redeploys on every 'git push'
+
+  # 3. The Frontend Service
+  - type: web
+    name: frontend
+    plan: free
+    # This tells Render to build the Dockerfile in ./frontend
+    dockerfilePath: ./frontend/Dockerfile
+    # This section handles routing
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    autoDeploy: true
