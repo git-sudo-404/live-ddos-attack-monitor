@@ -40,7 +40,7 @@ services:
         value: 8080
     healthCheck:
       # This matches your compose file's healthcheck
-      path: / # You might need to change this to a real healthcheck endpoint
+      path: /api/health
       initialDelaySeconds: 30
     autoDeploy: true # Redeploys on every 'git push'
 
