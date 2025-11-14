@@ -1,5 +1,5 @@
 import express, { type Request, type Response } from "express";
-import app from "./server.ts";
+import app from "./server.js";
 app.get("/api/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "ok" });
 });

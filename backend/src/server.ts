@@ -1,6 +1,6 @@
 import express from "express";
 import { type Request, type Response } from "express";
-import pool from "./DB/connection.ts";
+import pool from "./DB/connection.js";
 import cors from "cors";
 
 const app = express();
