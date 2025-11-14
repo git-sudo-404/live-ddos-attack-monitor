@@ -1,9 +1,9 @@
+import TestBackendConnection from "./TestBackendConnection";
+
 function App() {
-  return (
-    <>
-      <p className="text-red-500 size-20">Welcome to HomePage</p>
-    </>
-  );
+  TestBackendConnection();
+
+  return <></>;
 }
 
 export default App;

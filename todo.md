@@ -2,10 +2,18 @@
 
 #### _TODO_
 
-- Use docker-compose.dev.yaml while developing using hot-reloading.
-
 - Use multi-stage Dockerfile to reduce image size in production.
 
-* CI/CD Pipeline in GitHub
+* Create a seperate sample repo after connecting the services
 
-- Experiment with PostgreSQL & TimeScaleDB
+- CI/CD Pipeline in GitHub
+
+* Experiment with PostgreSQL & TimeScaleDB
+
+- Blueprint deployment on render
+
+<!-- FIX: --> Was last working on :
+<!----> Connecting DB and Backed .
+<!----> NEXT : connect the Frontend with the Backend .
+<!----> NEXT : add this to the tepmlate repo not as main branch but as base branch.
+<!----> NEXT : Add CI/CD pipeline as another branch in repo.
