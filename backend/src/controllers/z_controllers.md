@@ -1,0 +1,2 @@
+- This folder has all the logic and the databse interaction codes.
+- These will be called in the routes.

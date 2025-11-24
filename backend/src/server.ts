@@ -1,21 +1,19 @@
-import express from "express";
-import { type Request, type Response } from "express";
-import pool from "./DB/connection.js";
-import cors from "cors";
+import express, { type Request, type Response } from "express";
+
+import timeRoute from "./routes/default-routes/time-route.ts";
+import ipRoute from "./routes/default-routes/ip-route.ts";
+import geoRoute from "./routes/default-routes/geography-route.ts";
+import attackTypeRoute from "./routes/default-routes/attack-type-route.ts";
 
 const app = express();
 
-app.use(cors());
-
-app.get("/api", (req: Request, res: Response) => {
-  res.send("This is the Home Page Route");
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).send("Hi from the server.");
 });
 
-app.get("/api/test-connection", (req: Request, res: Response) => {
-  console.log("test-connection Request from Frontend");
-  res.status(200).json({
-    msg: "Message from Express Backend",
-  });
-});
+app.use("/time", timeRoute);
+app.use("/ip", ipRoute);
+app.use("/geo", geoRoute);
+app.use("/attack-type", attackTypeRoute);
 
 export default app;

@@ -1,7 +1,10 @@
-import express, { type Request, type Response } from "express";
-import app from "./server.js";
-app.get("/api/health", (req: Request, res: Response) => {
-  res.status(200).json({ status: "ok" });
-});
+import app from "./server.ts";
+import "dotenv/config";
+import { type Request, type Response } from "express";
+const PORT = process.env.PORT;
 
-app.listen(8080, () => console.log("Server is listening on PORT : 8080"));
+// app.get("/", (req: Request, res: Response) => {
+//   res.status(200).send("Hi from the server.");
+// });
+
+app.listen(PORT, () => console.log("Server is running on PORT :  ", PORT));
