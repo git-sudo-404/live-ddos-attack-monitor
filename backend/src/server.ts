@@ -1,9 +1,9 @@
 import express, { type Request, type Response } from "express";
 
-import timeRoute from "./routes/default-routes/time-route.ts";
-import ipRoute from "./routes/default-routes/ip-route.ts";
-import geoRoute from "./routes/default-routes/geography-route.ts";
-import attackTypeRoute from "./routes/default-routes/attack-type-route.ts";
+import timeRoute from "./routes/default-routes/time-route.js";
+import ipRoute from "./routes/default-routes/ip-route.js";
+import geoRoute from "./routes/default-routes/geography-route.js";
+import attackTypeRoute from "./routes/default-routes/attack-type-route.js";
 
 const app = express();
 
