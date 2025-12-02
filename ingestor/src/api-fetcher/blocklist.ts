@@ -33,7 +33,7 @@ async function getBlockList(
     confidenceMinimum: `${confidenceMinimumScore}`,
   }).toString();
 
-  const blocklist_fetch_request = new Request(blocklist_url, {
+  const blocklist_fetch_request_json = new Request(blocklist_url, {
     method: `GET`,
     headers: {
       Accept: "application/json",
@@ -41,11 +41,22 @@ async function getBlockList(
     },
   });
 
-  const data = await fetch(blocklist_fetch_request);
+  const blocklist_fetch_request_text = new Request(blocklist_url, {
+    method: `GET`,
+    headers: {
+      Accept: "text/plain",
+      Key: `${ABUSEIPDB_API_KEY}`,
+    },
+  });
+
+  const data = await fetch(blocklist_fetch_request_json);
+
+  // const data = await fetch(blocklist_fetch_request_text);
 
   console.log(data);
 
-  console.log("JSON : \n", data.json());
+  const response = await data.json();
+  console.log(response);
 }
 
 export default getBlockList;
