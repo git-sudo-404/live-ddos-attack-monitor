@@ -12,7 +12,21 @@ CREATE TABLE ddos_attacks (
 CREATE TABLE blacklist(
 
   ip cidr,
-  acore INTEGER,
+  score INTEGER,
   last_reported_at timestamp
+
+);
+
+CREATE TABLE a10_zombie_info(
+  
+  ID SERIAL PRIMARY KEY,
+  ip_address INET,
+  active BOOLEAN,
+  country_code_iso2 VARCHAR(2),
+  latitude DECIMAL,
+  longitude DECIMAL,
+  asn INTEGER, -- Autonomous System Number 
+  as_org TEXT, -- Autonomous System Organization Name
+  category VARCHAR(20)
 
 );
