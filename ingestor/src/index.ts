@@ -6,4 +6,4 @@ import digital_attack_map_fetch from "./api-fetcher/Digital_attack_map_api_fetch
 
 // digital_attack_map_fetch();
 
-// a10_zombie_info_fetch();
+a10_zombie_info_fetch();

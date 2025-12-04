@@ -52,7 +52,7 @@ export default async function a10_zombie_info_fetch() {
     },
   );
 
-  console.log("VALUES : ", values);
+  // console.log("VALUES : ", values);
 
   //NOTE: Whenever there is a conflict in INSERT queries , POSTGRESQL puts the new data into EXCLUDED table
   // This one works only if there is one extra duplicate or if the unique column appears again after an insertion.
@@ -86,7 +86,49 @@ export default async function a10_zombie_info_fetch() {
 
   const map = new Map<string, A10ZombieRowValueType>();
 
-  const query_format_string = format(``);
+  for (const item of values) {
+    map.set(item[0], item);
+  }
+
+  let upsert_values: A10ZombieRowValueType[] = [];
+
+  // console.log(map);
+
+  for (const k of map.keys()) {
+    upsert_values.push(map.get(k));
+  }
+
+  console.log("UPSERT VALS : ", upsert_values);
+
+  const query_format_string = format(
+    `
+  INSERT INTO 
+  a10_zombie_info (
+    ip_address,
+    active,
+    country_code_iso2,
+    latitude,
+    longitude,
+    asn,
+    as_org,
+    country_name,
+    category
+  )
+  VALUES 
+  %L 
+  ON CONFLICT (ip_address) 
+  DO UPDATE SET 
+  active = EXCLUDED.active,
+  country_code_iso2 = EXCLUDED.country_code_iso2,
+  latitude = EXCLUDED.latitude,
+  longitude = EXCLUDED.longitude,
+  asn = EXCLUDED.asn,
+  as_org = EXCLUDED.as_org,
+  country_name = EXCLUDED.country_name,
+  category = EXCLUDED.category
+  `,
+    upsert_values,
+  );
 
   console.log("Executing Query...");
 
