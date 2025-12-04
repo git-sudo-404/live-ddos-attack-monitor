@@ -95,7 +95,7 @@ export default async function a10_zombie_info_fetch() {
   // console.log(map);
 
   for (const k of map.keys()) {
-    upsert_values.push(map.get(k));
+    upsert_values.push(<A10ZombieRowValueType>map.get(k));
   }
 
   console.log("UPSERT VALS : ", upsert_values);
